@@ -1,0 +1,51 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+{% cache 'single/single' post %}
+
+<div class="section active" id="single">
+	<div class="container">
+		<article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}">
+			<section class="article-content">
+				<div class="row">
+					<div class="col-md-7">
+						<h1 class="article-title">{{ post.title }}</h1>
+						<p class="blog-author">
+							{{ post.date }}
+						</p>
+						<div class="article-body">
+							{{post.content}}
+						</div>
+					</div>
+					<div class="col-md-5">
+						<img class="img-fluid img-thumbnail" src="{{ post.thumbnail.src }}">
+					</div>
+				</div>
+				<a href="{{ blog_link }}" class="link-back btn">
+					<<</a> </section> <!-- comment box -->
+						{# <section class="comment-box">
+				<!-- comments -->
+				<div class="comments">
+					{% if post.comments %}
+					<h3> comments </h3>
+					{% for cmt in post.comments %}
+					{% include "comment.twig" with {comment:cmt} %}
+					{% endfor %}
+					{% endif %}
+				</div>
+
+				{% if post.comment_status == "closed" %}
+				<p> comments for this post are closed </p>
+				{% else %}
+				<!-- comment form -->
+				{% include "comment-form.twig" %}
+				{% endif %}
+			</section> #}
+		</article>
+	</div>
+</div>
+
+{% endcache %}
+
+{% endblock %}

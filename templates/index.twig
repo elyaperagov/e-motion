@@ -1,0 +1,32 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+{% cache 'index/index' posts %}
+
+<div class="section active" id="blog">
+
+	<div class="container">
+		<h1 class="title">{{ lang_data.blog }}</h1>
+		<div class="row justify-content-center">
+			{% if posts %}
+			{% for post in posts %}
+			<div class="col-sm-6 col-md-4">
+				{% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
+			</div>
+			{% endfor %}
+			{% endif %}
+			{% if posts is empty %}
+			<div class="no-posts">
+				{{ lang_data.no_posts }}
+			</div>
+			{% endif %}
+		</div>
+		{% include 'partial/pagination.twig' with { pagination: posts.pagination({show_all: true, mid_size: 3, end_size: 2}) } %}
+	</div>
+
+</div>
+
+{% endcache %}
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% if hidden %}
+<div class="section fp-auto-height" id="emtest">
+    <a class="go-up" href="#"><i class="fas fa-long-arrow-alt-up"></i></a>
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-6">
+                <h2>{{ site_settings.contact_title }}</h2>
+                <a class="btn btn-white btn-contact" title="{{ site_settings.contact_title }}" href="/contact/">
+                    {{ lang_data.contact }}
+                </a>
+            </div>
+            <div class="col-md-6">
+                {{ site_settings.contact_text }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<footer class="section fp-auto-height">
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col copyright">
+                {{ site_settings.copyright }}
+            </div>
+            <div class="col">
+                <a href="/legal/">{{ lang_data.legal }}</a>
+            </div>
+            <div class="col d-none d-sm-block">
+                <img alt="{{ site.name }}" src="{{ site_settings.logo_footer }}">
+            </div>
+            <div class="col reseaux">
+                <ul>
+                    {% if site_settings.instagram_link %}
+                    <li>
+                        <a target="_blank" title="Подписывайтесь на наш Instagram"
+                            href="{{ site_settings.instagram_link }}">
+                            <i class="fab fa-instagram fa-lg"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if site_settings.facebook_link %}
+                    <li>
+                        <a target="_blank" title="Follow us on Facebook" href="{{ site_settings.facebook_link }}">
+                            <i class="fab fa-facebook-f fa-lg"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if site_settings.vk_link %}
+                    <li>
+                        <a target="_blank" title="Следите за новостями в VK" href="{{ site_settings.vk_link }}">
+                            <i class="fab fa-vk fa-lg"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if site_settings.youtube_link %}
+                    <li>
+                        <a target="_blank" title="Наш канал на Youtube" href="{{ site_settings.youtube_link }}">
+                            <i class="fab fa-youtube fa-lg"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="col">
+                Powered by <a title="Andreaszak" target="_blank" href="https://andreaszak.ru">Andreaszak</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script type="data/json" id="settings_json">
+    {{ site_settings_json }}
+</script>
+
+{% if site_settings.metrics %}
+{{site_settings.metrics}}
+{% endif %}
+
+{{ function('wp_footer') }}

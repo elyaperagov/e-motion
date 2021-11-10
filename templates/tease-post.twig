@@ -1,0 +1,19 @@
+{% extends "tease.twig" %}
+
+{% block content %}
+
+<div class="teaser">
+	{% if post.thumbnail.src %}
+	<a href="{{post.link}}">
+		<img class="img-thumbnail" src="{{post.thumbnail.src}}" alt="{{post.title}}" />
+	</a>
+	{% endif %}
+	<div class="teaser-bottom">
+		<h3 class="teaser-title"><a href="{{post.link}}">{{post.title}}</a></h3>
+		<p>{{post.date}}</p>
+		<p class="teaser-text">{{post.post_content|striptags|slice(0, 120) ~ '...' }}</p>
+		<a href="{{post.link}}" class="btn">{{ lang_data.read_more }}</a>
+	</div>
+</div>
+
+{% endblock %}

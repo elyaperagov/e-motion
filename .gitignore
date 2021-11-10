@@ -1,22 +1,16 @@
-# Application
-web/app/plugins/*
-!web/app/plugins/.gitkeep
-web/app/mu-plugins/*/
-web/app/upgrade
-web/app/uploads/*
-!web/app/uploads/.gitkeep
-
-# WordPress
-web/wp
-web/.htaccess
-
-# Dotenv
-.env
-.env.*
-!.env.example
-
-# Composer
-/vendor
-
-# WP-CLI
-wp-cli.local.yml
+/minify/
+.DS_Store
+.idea
+.vscode
+package-lock.json
+yarn.lock
+*.ai
+*.log
+*.pdf
+*.psd
+*.sublime*
+node_modules/
+npm-debug.*
+Thumbs.db
+yarn-error.log
+log

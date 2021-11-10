@@ -1,0 +1,12 @@
+{% if menu %}
+<a class="btn-open-menu d-block d-sm-none" href="#"><i class="fas fa-bars"></i></a>
+<div class="menu-mobile">
+	<ul>
+		{% for item in items %}
+		<li class="{% if current_url == item.link %}active{% endif %} {#{ item.classes | join(' ') }#}">
+			<a target="{{ item.target }}" href="{{ item.link }}">{{ item.title }}</a>
+		</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endif %}

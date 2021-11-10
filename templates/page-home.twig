@@ -1,0 +1,364 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+{% cache 'page/home' post %}
+
+<div class="section active" id="choice">
+	{% for model in models %}
+	<div class="moto-choix moto-choix-{{ model.post_name }}" data-model="{{ model.post_name }}">
+		<div class="moto-choix-bg" style="background-image: url({{ model.fields.main_image.url }})"></div>
+		<div class="moto-choix-color">
+			<img src="{{ model.fields.logo.url }}">
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
+<div class="section section--small-height" id="slider">
+	<a title="Previous Moto" class="go-arrow go-left" href="#"><i class="fas fa-chevron-left"></i></a>
+	<a title="Next Moto" class="go-arrow go-right" href="#"><i class="fas fa-chevron-right"></i></a>
+	{# <a title="See informations about this moto" class="go-down" href="#"><i
+			class="fas fa-long-arrow-alt-down fa-lg"></i></a> #}
+	{% for model in models %}
+	{% for key, model_type in model.fields.model_types %}
+	<div class="slide"
+		data-anchor="{{ model.post_name }},{{ model_type.model_short_slug }},{{ model_type.product_code }}">
+		<div data-val='{{ model_type.typed_text_json }}' class="punchlines punchlines-{{ model_type.model_slug }}"></div>
+		{% if model_type.product_price %}
+		<div class="model-cost">
+			{% if model_type.product_price_preorder %}
+			<h2>Цена: <i>{{ model_type.product_price }}</i>/{{ model_type.product_price_preorder }} <span>€*</span></h2>
+			<h3><small>цена указана со скидкой {{ model_type.product_price_percent }}<span>%</span> по предзаказу</small></h3>
+			{% else %}
+			<h2>Цена: {{ model_type.product_price }}</h2>
+			{% endif %}
+		</div>
+		{% endif %}
+		<img class="img-fluid" src="{{ model_type.main_image.url }}">
+	</div>
+	{% endfor %}
+	{% endfor %}
+</div>
+
+<div class="section section--small-height fp-auto-height" id="bio">
+	{# <a class="go-down" href="#"><i class="fas fa-long-arrow-alt-down fa-lg"></i></a> #}
+	<div class="container">
+		{% for model in models %}
+		{% for key, model_type in model.fields.model_types %}
+		<div class="bio bio-{{ model_type.model_slug }}">
+			<h1>{{ model_type.description_title }}</h1>
+			{{ model_type.description_text }}
+		</div>
+		{% endfor %}
+		{% endfor %}
+	</div>
+</div>
+
+<div class="section section--auto-height fp-auto-height" id="spec">
+
+	{# <a class="go-down" href="#"><i class="fas fa-long-arrow-alt-down fa-lg"></i></a> #}
+
+	<div class="container">
+		<div class="spec-principales">
+			<h1>
+				<span class="spec-name">{{ lang_data.specification }}</span>
+				<br>
+				<span class="modele-name"></span>
+			</h1>
+
+			{% for model in models %}
+			{% for key, model_type in model.fields.model_types %}
+			<div class="row spec spec-{{ model_type.model_slug }}">
+				<div class="col">
+					<div class="spec-title">{{ lang_data.max_speed }}</div>
+					<div class="spec-number">
+						<span data-number-valeur="{{ model_type.speed }}" class="spec-number-valeur">{{ model_type.speed }}</span>
+						<span class="spec-number-unit">{{ lang_data.km_h }}</span>
+					</div>
+					<div class="spec-number-old">
+						<span data-number-old-valeur="{{ model_type.speed_2019 }}"
+							class="spec-number-old-valeur">{{ model_type.speed_2019 }}</span>
+						<span class="spec-number-old-unit">{{ lang_data.km_h }}</span>
+					</div>
+				</div>
+				<div class="col">
+					<div class="spec-title">{{ lang_data.range }}</div>
+					<div class="spec-number">
+						<span data-number-valeur="{{ model_type.range }}" class="spec-number-valeur">{{ model_type.range }}</span>
+						<span class="spec-number-unit">{{ lang_data.km }}</span>
+					</div>
+					<div class="spec-number-old">
+						<span data-number-old-valeur="{{ model_type.range_2019 }}"
+							class="spec-number-old-valeur">{{ model_type.range_2019 }}</span>
+						<span class="spec-number-old-unit">{{ lang_data.km }}</span>
+					</div>
+				</div>
+				<div class="col">
+					<div class="spec-title">{{ lang_data.weight }}</div>
+					<div class="spec-number">
+						<span data-number-valeur="{{ model_type.weight }}" class="spec-number-valeur">{{ model_type.weight }}</span>
+						<span class="spec-number-unit">{{ lang_data.kg }}</span>
+					</div>
+					<div class="spec-number-old">
+						<span data-number-old-valeur="{{ model_type.weight_2019 }}"
+							class="spec-number-old-valeur">{{ model_type.weight_2019 }}</span>
+						<span class="spec-number-old-unit">{{ lang_data.kg }}</span>
+					</div>
+				</div>
+				<div class="col">
+					<div class="spec-title">{{ lang_data.torque }}</div>
+					<div class="spec-number">
+						<span data-number-valeur="{{ model_type.torque }}" class="spec-number-valeur">{{ model_type.torque }}</span>
+						<span class="spec-number-unit">{{ lang_data.nm }}</span>
+					</div>
+					<div class="spec-number-old">
+						<span data-number-old-valeur="{{ model_type.torque_2019 }}"
+							class="spec-number-old-valeur">{{ model_type.torque_2019 }}</span>
+						<span class="spec-number-old-unit">{{ lang_data.nm }}</span>
+					</div>
+				</div>
+				<div class="col">
+					<div class="spec-title">{{ lang_data.category }}</div>
+					<div class="spec-number">
+						<span>{{ model_type.road_legal }}</span>
+					</div>
+					<div class="spec-number-old">
+						{{ model_type.road_legal_2019 }}
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+			{% endfor %}
+
+			<hr>
+		</div>
+
+		<a href="#" title="See all the specifications" class="more-moto">+</a>
+
+		<div class="more-moto-info">
+
+			{% for model in models %}
+			{% for key, model_type in model.fields.model_types %}
+
+			<div class="moto-info moto-info-{{ model_type.model_slug }}">
+				{% for table in model_type.specification_table.table_block %}
+
+				<h2>{{ table.table_title }}</h2>
+				<table class="table">
+					<tbody>
+						{% for row in table.table_row %}
+						<tr>
+							<th>{{ row.row_title }}</th>
+							<td>{{ row.row_value }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+
+				{% endfor %}
+			</div>
+
+			{% endfor %}
+			{% endfor %}
+
+		</div>
+	</div>
+</div>
+
+{% for i in 0..3 %}
+<div class="section section--auto-height section-piece section-piece-{{ i + 1 }}">
+	{# <a class="go-down" href="#"><i class="fas fa-long-arrow-alt-down fa-lg"></i></a> #}
+	<div class="slide slide-focus"
+		style="background:url({{ site.theme.uri }}/assets/img/bg_focus_0{{ i + 1 }}.jpg) center center no-repeat; background-size:cover;">
+		<div class="container">
+			{% set c = 1 %}
+			{% for model in models %}
+			{% for key, model_type in model.fields.model_types %}
+			<div class="slide-focus-content slide-focus-content-{{ c }}">
+				<h1>{{ model_type.innovation_block[i].innovation_title }}</h1>
+				<p>{{ model_type.innovation_block[i].innovation_description }}</p>
+				<a class="btn btn-white" href="#">{{ lang_data.more }}</a>
+			</div>
+			{% set c = c + 1 %}
+			{% endfor %}
+			{% endfor %}
+		</div>
+	</div>
+	<div class="slide-focus-info">
+		<a title="Back to the focus piece" href="#"><i class="far fa-times-circle fa-2x"></i></a>
+		<!--<a class="go-next-piece" href="#"><i class="fas fa-long-arrow-alt-down fa-lg"></i></a>-->
+		<div class="container-fluid">
+			{% set c = 1 %}
+			{% for model in models %}
+			{% for key, model_type in model.fields.model_types %}
+			<div class="slide-focus-info-content slide-focus-info-content-{{ c }}">
+				<div class="row justify-content-center align-items-center modal-wrapper">
+					<div class="modal-item">
+						<img class="img-fluid" src="{{ model_type.innovation_block[i].innovation_image_more.url }}">
+					</div>
+					<div class="modal-item">
+						<div class="slide-focus-info-txt">
+							<h2>{{ model_type.innovation_block[i].innovation_title_more }}</h2>
+							{{ model_type.innovation_block[i].innovation_description_more }}
+						</div>
+					</div>
+				</div>
+			</div>
+			{% set c = c + 1 %}
+			{% endfor %}
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% endfor %}
+
+<div class="section section--small-height section-galerie fp-auto-height">
+	{% set i = 1 %}
+	{% for model in models %}
+	{% for key, model_type in model.fields.model_types %}
+	<div class="galerie galerie-0{{ i }}">
+		<div class="row">
+			{% for gallery in model_type.gallery %}
+			<div class="col">
+				<a data-fancybox="gallery-0{{ i }}" href="{{ gallery.url }}">
+					<img class="img-fluid" src="{{ gallery.sizes.medium }}">
+				</a>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	{% set i = i + 1 %}
+	{% endfor %}
+	{% endfor %}
+</div>
+
+<div class="section section-contact fp-auto-height" id="page-contact"
+	style="background:url({{ site.theme.uri }}/assets/img/bg_contact.jpg) center center no-repeat; background-size:cover;">
+	<div class="container">
+		<div class="row">
+			<div class="col-12 col-md-8 col-lg-6">
+
+				<div class="form-wrap d-flex justify-content-center align-items-center flex-wrap" id="contact_form">
+					<template v-if="success_text.length">
+						<div class="success-wrap" v-html="success_text"></div>
+					</template>
+					<template v-else>
+						<h4 class="form-title">Контактные данные</h4>
+						<form action="#" autocomplete="off" v-on:submit.prevent="formSend()">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="surname">Фамилия</label>
+										<input v-model="form.surname.value" type="text" name="surname" id="surname" class="form-control"
+											placeholder="Фамилия" />
+										<span class="form-error" v-text="form.surname.error"></span>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="name">Имя</label>
+										<input v-model="form.name.value" type="text" name="name" id="name" class="form-control"
+											placeholder="Имя" />
+										<span class="form-error" v-text="form.name.error"></span>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="form-group">
+										<label for="countrySelect">Страна</label>
+										<v-select class v-on:search:focus="onFocus()" v-on:search:blur="onBlur('Страна')"
+											placeholder="Страна" v-model="form.country.value" :options="countries">
+											<div slot="no-options">Не найдено</div>
+										</v-select>
+										<span class="form-error" v-text="form.country.error"></span>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="form-group">
+										<label for="citySelect">Город</label>
+										<v-select v-on:search:focus="onFocus()" v-on:search:blur="onBlur('Город')" ref="usernameInput"
+											class="city-chooser" placeholder="Город" v-model="form.city.value" taggable
+											:filter-by="filterСityBy" :options="cities[form.country.value]">
+											<div slot="no-options">Выберите страну</div>
+										</v-select>
+										<span class="form-error" v-text="form.city.error"></span>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="form-group">
+										<label for="phone">Телефон</label>
+										<input v-model="form.phone.value" v-mask="'+#(###)###-##-##'" type="tel" name="phone" id="phone"
+											class="form-control" placeholder="+7 (988) 888-88-88" />
+										<span class="form-error" v-text="form.phone.error"></span>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="form-group">
+										<label for="email">E-mail</label>
+										<input v-model="form.email.value" type="text" name="email" id="email" class="form-control"
+											placeholder="E-mail" />
+										<span class="form-error" v-text="form.email.error"></span>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="form-group">
+										<label for="message">Комментарий</label>
+										<textarea v-model="form.message.value" name="message" id="message" class="form-control"
+											placeholder="Комментарий"></textarea>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="form-group custom-control custom-checkbox">
+										<input v-model="form.accept.value" type="checkbox" name="accept" id="acceptForm"
+											class="custom-control-input" />
+										<label class="custom-control-label" for="acceptForm"
+											v-on:click.prevent="form.accept.value = !form.accept.value"
+											v-bind:class="{red: form.accept.error}">
+											Согласие на
+											<a href="#" data-toggle="modal" data-target="#privacy_modal">
+												обработку персональных
+												данных
+											</a>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="text-center">
+								<a href="#" class="btn btn-submit" v-on:click.prevent="formSend()">Отправить заявку</a>
+							</div>
+						</form>
+					</template>
+					<v-style>${showCities()}</v-style>
+				</div>
+
+			</div>
+			<div class="col-12 col-md-4 col-lg-6">
+				<div class="form-text">{{site_settings.form_text}}
+					<hr>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="privacy_modal" class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Политика конфиденциальности</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{{site_settings.privacy_text}}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal-backdrop"></div>
+
+{% endcache %}
+
+{% endblock %}

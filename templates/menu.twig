@@ -1,0 +1,11 @@
+{% if menu %}
+<nav>
+	<ul>
+		{% for item in items %}
+		<li class="{% if current_url == item.link %}active{% endif %} {#{ item.classes | join(' ') }#}">
+			<a target="{{ item.target }}" href="{{ item.link }}">{{ item.title }}</a>
+		</li>
+		{% endfor %}
+	</ul>
+</nav>
+{% endif %}

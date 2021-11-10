@@ -1,0 +1,127 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+{% cache 'page/contact' post %}
+
+<div class="section active" id="page-contact"
+  style="background:url({{ site.theme.uri }}/assets/img/bg_contact.jpg) center center no-repeat; background-size:cover;">
+  <div class="container">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-12 col-md-8 col-lg-6">
+        <div class="form-wrap d-flex justify-content-center align-items-center flex-wrap mt-5 mb-5" id="contact_form">
+          <template v-if="success_text.length">
+            <div class="success-wrap" v-html="success_text"></div>
+          </template>
+          <template v-else>
+            <h4 class="form-title">Контактные данные</h4>
+            <form action="#" autocomplete="off" v-on:submit.prevent="formSend()">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="surname">Фамилия</label>
+                    <input v-model="form.surname.value" type="text" name="surname" id="surname" class="form-control"
+                      placeholder="Фамилия" />
+                    <span class="form-error" v-text="form.surname.error"></span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="name">Имя</label>
+                    <input v-model="form.name.value" type="text" name="name" id="name" class="form-control"
+                      placeholder="Имя" />
+                    <span class="form-error" v-text="form.name.error"></span>
+                  </div>
+                </div>
+                <div class="col-12" v-if="models.length">
+                  <div class="form-group">
+                    <label for="modelSelect">Модель</label>
+                    <v-select class v-on:search:focus="onFocus()" v-on:search:blur="onBlur('Модель')"
+                      placeholder="Модель" v-model="chosen_product" :options="models" label="name">
+                      <div slot="no-options">Не найдено</div>
+                    </v-select>
+                    <span class="form-error" v-text="form.model.error"></span>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="countrySelect">Страна</label>
+                    <v-select class v-on:search:focus="onFocus()" v-on:search:blur="onBlur('Страна')"
+                      placeholder="Страна" v-model="form.country.value" :options="countries">
+                      <div slot="no-options">Не найдено</div>
+                    </v-select>
+                    <span class="form-error" v-text="form.country.error"></span>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="citySelect">Город</label>
+                    <v-select v-on:search:focus="onFocus()" v-on:search:blur="onBlur('Город')" ref="usernameInput"
+                      class="city-chooser" placeholder="Город" v-model="form.city.value" taggable
+                      :filter-by="filterСityBy" :options="cities[form.country.value]">
+                      <div slot="no-options">Выберите страну</div>
+                    </v-select>
+                    <span class="form-error" v-text="form.city.error"></span>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="phone">Телефон</label>
+                    <input v-model="form.phone.value" v-mask="'+#(###)###-##-##'" type="tel" name="phone" id="phone"
+                      class="form-control" placeholder="+7 (988) 888-88-88" />
+                    <span class="form-error" v-text="form.phone.error"></span>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input v-model="form.email.value" type="text" name="email" id="email" class="form-control"
+                      placeholder="E-mail" />
+                    <span class="form-error" v-text="form.email.error"></span>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="message">Комментарий</label>
+                    <textarea v-model="form.message.value" name="message" id="message" class="form-control"
+                      placeholder="Комментарий"></textarea>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group custom-control custom-checkbox">
+                    <input v-model="form.accept.value" type="checkbox" name="accept" id="acceptForm"
+                      class="custom-control-input" />
+                    <label class="custom-control-label" for="acceptForm"
+                      v-on:click.prevent="form.accept.value = !form.accept.value"
+                      v-bind:class="{red: form.accept.error}">
+                      Согласие на
+                      <a href="#" data-toggle="modal" data-target="#privacy_modal">
+                        обработку персональных
+                        данных
+                      </a>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <a href="#" class="btn btn-submit" v-on:click.prevent="formSend()">Отправить заявку</a>
+              </div>
+            </form>
+          </template>
+          <v-style>${showCities()}</v-style>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-6 coord">
+        {{ post.fields.contact_text }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="data/json" id="models_json">
+  {{ model_types_json }}
+</script>
+
+{% endcache %}
+
+{% endblock %}

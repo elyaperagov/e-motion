@@ -1,0 +1,50 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+{% cache 'page/story' post %}
+
+<div class="section active">
+    <div class="info">
+        {{ post.fields.card_text }}
+        <div class="text-center d-none d-sm-block">
+            <a class="btn go-down-histoire" href="#">
+                {{ lang_data.read_more }}
+            </a>
+        </div>
+        <a class="btn-hide-info d-none d-sm-block" href="#">
+            <i class="far fa-times-circle fa-lg">
+            </i>
+        </a>
+    </div>
+    <div class="picture" style="background-image: url({{ post.fields.left_image.url }})">
+    </div>
+    <div class="video">
+        <iframe allow="autoplay;" frameborder="0" height="315" src="{{ post.fields.youtube }}" width="560">
+        </iframe>
+    </div>
+</div>
+<div class="section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-inside col-inside-left">
+                    {{ post.fields.more_text_left }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-inside col-inside-right">
+                    <p>
+                        <img alt="" class="img-fluid img-histoire" height="480"
+                            src="{{ post.fields.more_text_right_image.url }}" />
+                    </p>
+                    {{ post.fields.more_text_right }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endcache %}
+
+{% endblock %}

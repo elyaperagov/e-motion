@@ -1,0 +1,23 @@
+<header>
+    {% include "menu-mobile.twig" with {'items': mobile_menu.get_items} %}
+    {% include "menu.twig" with {'items': left_menu.get_items} %}
+    <a title="{{ site.name }}" class="logo" href="/">
+        <img src="{{ site_settings.logo_header }}">
+    </a>
+    {% include "menu.twig" with {'items': right_menu.get_items} %}
+    {% set c = 0 %}
+    {% for key_m, model in models %}
+    {% if model.fields.model_types|length > 1 %}
+    <ul class="filter-moto" data-model="{{ model.post_name }}">
+        {% for key, model_type in model.fields.model_types %}
+        <li class="{% if key == 0 %}filter-actif{% endif %}">
+            <a data-key="{{ c }}" data-type="{{ model_type.model_short_slug }}"
+                class="{{ model_type.model_short_slug }}" href="#">{{ model_type.model_title }}</a>
+        </li>
+        {% set c = c + 1 %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endfor %}
+    <a href="#" class="go-to-order btn">{{ lang_data.order }}</a>
+</header>

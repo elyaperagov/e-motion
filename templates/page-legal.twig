@@ -1,0 +1,16 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+{% cache 'page/legal' post %}
+
+<div class="section active" id="page">
+	<div class="space30"></div>
+	<h1>{{post.title}}</h1>
+	<div class="space30"></div>
+	{{post.content}}
+</div>
+
+{% endcache %}
+
+{% endblock %}
